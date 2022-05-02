@@ -53,7 +53,7 @@ resim2=cv2.imread("gul.jpg")
 ##############################################
 #agirlikli toplam
 #bgr [3 51 39] resim icin
-#bgr [110 135 115] resim2 icin toplama islemi söyl olur 255 i gecince toplam-225 , gecmezse toplamin kendi olur 
+#bgr [110 135 115] resim2 icin toplama islemi söyle olur 255 i gecince toplam-256 , gecmezse toplamin kendi olur 
 #bgr toplam sonucu [113 186 154] olur
 #print(resim[10,50])
 #print(resim2[10,30])
@@ -70,5 +70,55 @@ resim2=cv2.imread("gul.jpg")
 #grilesme 2. yol
 #resimgri2=cv2.imread("papatya.jpg",0)
 #cv2.imshow("ikincigri",resimgri2)
+########################################
+#goruntu piramitleri 
+#goruntuyu buyutup kucultme
+#ikiKatBuyuk=cv2.pyrUp(resim2)#genisligi ve yuksekligi iki kat arttirir
+#ikiKatKucuk=cv2.pyrDown(resim2)#genisligi ve yuksekligi iki kat azaltir
+#cv2.imshow("orijinal",resim2)
+#cv2.imshow("buyuk",ikiKatBuyuk)
+#cv2.imshow("kucuk",ikiKatKucuk)
+#print("orijinal resim boyut:",resim2.shape)
+#print("iki kat resim boyut:",ikiKatBuyuk.shape)
+#print("iki kat resim boyut:",ikiKatKucuk.shape)
+## resim olusturma ve ekrana matrixini yazdirma
+#zeros elemanlari sifirdan olusan matrix olusturur
+#resimOlustur=np.zeros((300,300,3),dtype="uint8") syntaxı((resminGenisligi,resminYuksekligi,kanalSayisi),dtype)
+#print(resimOlustur)
+#########################
+#cizgi-daire-metinKutusu olusturma
+#resimOlustur=np.zeros((300,300,3),dtype="uint8") #syntaxı((resminGenisligi,resminYuksekligi,kanalSayisi),dtype)
+#cv2.line(resimOlustur,(0,0),(100,100),(0,0,255),3)# kirmizi 3 kalinliginda cizgi cizme 0,0 dan 100,100 noktasina kadar
+#cv2.circle(resimOlustur,(150,150),25,(0,255,0),4)#cember cizme
+#cv2.putText(resimOlustur,"Merhabalar",(110,110),cv2.FONT_HERSHEY_COMPLEX,1,(255,0,0),1)#yazi ekleme
+#cv2.imshow("yeni Hali",resimOlustur)
+########################
+#filtreleme
+#mean dogrusal filtredir
+#gausian ve median lineer degildir 
+gurultulu=cv2.imread("gurultuluResim.jpg")
+#cv2.imshow("orijinal resim",gurultulu)
+#meanİyilestirilmis=cv2.blur(gurultulu,(3,3))#gurultulu resmi 3*3luk matrixlerin ort alarak  bulaniklastirarak yumusatir
+#cv2.imshow("mean1 resim",meanİyilestirilmis)
+#meanİyilestirilmis2=cv2.blur(gurultulu,(4,4))#gurultulu resmi 4*4luk matrixlerin ort alarak bulaniklastirarak yumusatir 
+#cv2.imshow("mean2 resim",meanİyilestirilmis2)
+#medianİyilestirilmis=cv2.medianBlur(gurultulu, 3)#gurultulu resmi 3*3 luk matrix icindeki degerlerin medianını alarak bulaniklastirarak yumusatir
+#cv2.imshow("median resim2",medianİyilestirilmis)
+#medianİyilestirilmis2=cv2.medianBlur(gurultulu, 5)#gurultulu resmi 5*5 luk matrix icindeki degerlerin medianını alarak bulaniklastirarak yumusatir
+#cv2.imshow("median resim2",medianİyilestirilmis2)
+#gausianİyilestirilmis=cv2.GaussianBlur(gurultulu, (3,3), 0)# gaus denklemi ile 3*3 matrix icindeki degerleri bulaniklastirararak yumusatir
+#cv2.imshow("gausian resim1",gausianİyilestirilmis)
+#gausianİyilestirilmis=cv2.GaussianBlur(gurultulu, (5,5), 0)# gaus denklemi ile 5*5 matrix icindeki degerleri bulaniklastirararak yumusatir
+#cv2.imshow("gausian resim2",gausianİyilestirilmis)
+############################
+#morfolojik islemler
+#bu islemler siyah beyaz resimlerde daha basarili old icin  resmin siyah beyaz   halini kullandik
+#resimSiyahB=cv2.imread("papatya.jpg",0)
+#kernel=np.ones((5,5),np.uint8)
+#dilation=cv2.dilate(resimSiyahB,kernel,iterations=1)#beyazlari genisletme amaci tasir
+#cv2.imshow("original",resimSiyahB)
+#cv2.imshow("dilate",dilation)
+#erosion=cv2.erode(resimSiyahB, kernel,iterations=1)#asindirma islemi yapar
+#cv2.imshow("erosion",erosion)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
