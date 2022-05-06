@@ -113,12 +113,83 @@ gurultulu=cv2.imread("gurultuluResim.jpg")
 ############################
 #morfolojik islemler
 #bu islemler siyah beyaz resimlerde daha basarili old icin  resmin siyah beyaz   halini kullandik
-#resimSiyahB=cv2.imread("papatya.jpg",0)
-#kernel=np.ones((5,5),np.uint8)
-#dilation=cv2.dilate(resimSiyahB,kernel,iterations=1)#beyazlari genisletme amaci tasir
+resimSiyahB=cv2.imread("papatya.jpg",0)
+kernel=np.ones((5,5),np.uint8)
+#dilation=cv2.dilate(resimSiyahB,kernel,iterations=1)#beyazlari genisletme amaci tasir iterations u arttirirsak goruntude beyazlar artar
 #cv2.imshow("original",resimSiyahB)
 #cv2.imshow("dilate",dilation)
-#erosion=cv2.erode(resimSiyahB, kernel,iterations=1)#asindirma islemi yapar
+#erosion=cv2.erode(resimSiyahB, kernel,iterations=1)# beyazlara asindirma islemi yapar
 #cv2.imshow("erosion",erosion)
+#erosion kullandigin resimin ustune dilaiton kullanıp gurultu giderme yapabilirsin
+#opening=cv2.morphologyEx(resimSiyahB, cv2.MORPH_OPEN, kernel)#erosion ustune dilasion yapar
+#cv2.imshow("opening resim",opening)
+#closing=cv2.morphologyEx(resimSiyahB, cv2.MORPH_CLOSE, kernel)#dilasion ustune erosion yapar
+#cv2.imshow("closing resim",closing)
+#morfGrad=cv2.morphologyEx(resimSiyahB, cv2.MORPH_GRADIENT, kernel)#dilaiton-erosion 
+#tophat=cv2.morphologyEx(resimSiyahB, cv2.MORPH_TOPHAT, kernel)#orijinalResim-opening
+#cv2.imshow("tophat resim",tophat)
+#blackhat=cv2.morphologyEx(resimSiyahB, cv2.MORPH_BLACKHAT, kernel)#closing - orijinalResim
+#cv2.imshow("black resim",tophat)
+#################################
+#esik deger 
+#daha iyi sonuc almak icinrenkli bir resim kullandik
+#simple thresholdlar
+kus=cv2.imread("kus.png")
+#cv2.imshow("orijinal", kus)
+#ret,threshold=cv2.threshold(kus,125,255,cv2.THRESH_BINARY)#min value yani 125 altindakiler sıfıra yuvarlanir
+#cv2.imshow("treshold resim1",threshold)
+#ret,threshold2=cv2.threshold(kus,125,255,cv2.THRESH_BINARY_INV)#min value yani 125 altindakiler sıfıra yuvarlanir
+#cv2.imshow("treshold resim2",threshold2)
+#ret,threshold3=cv2.threshold(kus,125,255,cv2.THRESH_TRUNC)#min value yani 125 altindakiler sıfıra yuvarlanir
+#cv2.imshow("treshold resim3",threshold3)
+#ret,threshold4=cv2.threshold(kus,125,255,cv2.THRESH_TOZERO)#min value yani 125 altindakiler sıfıra yuvarlanir
+#cv2.imshow("treshold resim4",threshold4)
+#ret,threshold5=cv2.threshold(kus,125,255,cv2.THRESH_TOZERO_INV)#min value yani 125 altindakiler sıfıra yuvarlanir
+#cv2.imshow("treshold resim5",threshold5)
+#adaptive thresholding
+#th2 = cv2.adaptiveThreshold(resim,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
+ #           cv2.THRESH_BINARY,10,7)
+#cv2.imshow("Athresh",th2)
+#th3 = cv2.adaptiveThreshold(resim,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\
+ #           cv2.THRESH_BINARY,11,2)
+#cv2.imshow("Athresh",th3)
+#otsu thresholding
+#ret,Othres=cv2.threshold(kus,0,255,cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+#cv2.imshow("otsu thresh",Othres)
+#####################
+#canny kenar algilama
+#gri resimlerde blurlama yapacaz
+#gray=cv2.cvtColor(kus,cv2.COLOR_BGR2GRAY)
+#blur=cv2.GaussianBlur(gray,(3,3) , 0)
+#cv2.imshow("blurlu kus",blur)
+#canny=cv2.Canny(blur,50,150)#syntax (resim,altesik,ustesik)
+#cv2.imshow("canny resim",canny)
+#otomatik canny
+#def autoCanny(blur,sigma=0.44):
+    #median=np.median(blur)
+    #altEsik=int(max(0,1.0-sigma*median))
+    #ustEsik=int(min(255,1.0+sigma*median))
+    #canny=cv2.Canny(blur,altEsik,ustEsik)
+    #return canny
+
+#genisKenarAlg=cv2.Canny(blur,10,220)
+#darKenarAlg=cv2.Canny(blur,200,230)
+#auto=autoCanny(blur)
+#cv2.imshow("kenarlar",np.hstack([genisKenarAlg,darKenarAlg,auto]))#tum resimleri sirali getirdik
+#bitwise operatorleri(and ,or ,not,xor)
+resimSiyahB2=cv2.imread("gul.jpg",0)
+#andBws=cv2.bitwise_and(resimSiyahB, resimSiyahB2)
+#cv2.imshow("bitwise and",andBws)
+#orBws=cv2.bitwise_or(resimSiyahB, resimSiyahB2)
+#cv2.imshow("bitwise or",orBws)
+#xorBws=cv2.bitwise_xor(resimSiyahB, resimSiyahB2)
+#cv2.imshow("bitwise xor",xorBws)
+#notBws1=cv2.bitwise_not(resimSiyahB)
+#cv2.imshow("bitwise not",notBws1)
+#notBws2=cv2.bitwise_not(resimSiyahB2)
+#cv2.imshow("bitwise not2",notBws2)
+
+
+    
 cv2.waitKey(0)
 cv2.destroyAllWindows()
